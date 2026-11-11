@@ -6,6 +6,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,24 +19,40 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.countercompose.ui.theme.CounterComposeTheme
-import androidx.compose.runtime.getValue
+
+enum class Screen {
+    Counter,
+    DataDiri
+}
 
 @Composable
 fun CounterApp(
-    modifier: Modifier = Modifier,
-    viewModel: CounterViewModel = viewModel()
+    modifier: Modifier = Modifier
 ) {
-    val counter by viewModel.counter
+    var currentScreen by rememberSaveable { mutableStateOf(Screen.Counter) }
 
-    CounterScreen(
-        counter = counter,
-        onIncrement = { viewModel.increment() },
-        onDecrement = { viewModel.decrement() },
-        onReset = { viewModel.reset() },
-        modifier = modifier
-    )
+    when (currentScreen) {
+        Screen.Counter -> {
+            val counterViewModel: CounterViewModel = viewModel()
+            val counter by counterViewModel.counter
+
+            CounterScreen(
+                counter = counter,
+                onIncrement = { counterViewModel.increment() },
+                onDecrement = { counterViewModel.decrement() },
+                onReset = { counterViewModel.reset() },
+                onNext = { currentScreen = Screen.DataDiri },
+                modifier = modifier
+            )
+        }
+        Screen.DataDiri -> {
+            DataDiriScreen(
+                onBack = { currentScreen = Screen.Counter },
+                modifier = modifier
+            )
+        }
+    }
 }
-
 
 @Composable
 fun CounterScreen(
@@ -40,7 +60,8 @@ fun CounterScreen(
     onIncrement: () -> Unit,
     onDecrement: () -> Unit,
     onReset: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onNext: () -> Unit = {}
 ) {
     Column(
         modifier = modifier
@@ -56,13 +77,16 @@ fun CounterScreen(
         Spacer(modifier = Modifier.height(16.dp))
         CounterDisplay(
             value = counter,
-            modifier = Modifier.fillMaxWidth().weight(1f)
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
         )
         Spacer(modifier = Modifier.height(16.dp))
         CounterButtons(
             onDecrement = onDecrement,
             onIncrement = onIncrement,
-            onReset = onReset
+            onReset = onReset,
+            onNext = onNext
         )
     }
 }
@@ -96,7 +120,8 @@ fun CounterDisplay(value: Int, modifier: Modifier = Modifier) {
 fun CounterButtons(
     onDecrement: () -> Unit = {},
     onIncrement: () -> Unit = {},
-    onReset: () -> Unit = {}
+    onReset: () -> Unit = {},
+    onNext: () -> Unit = {}
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
@@ -107,7 +132,8 @@ fun CounterButtons(
                 onClick = onDecrement,
                 modifier = Modifier.weight(1f),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFF44336))
+                    containerColor = Color(0xFFF44336)
+                )
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_remove),
@@ -121,7 +147,8 @@ fun CounterButtons(
                 onClick = onIncrement,
                 modifier = Modifier.weight(1f),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF4CAF50))
+                    containerColor = Color(0xFF4CAF50)
+                )
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_add),
@@ -137,7 +164,8 @@ fun CounterButtons(
             onClick = onReset,
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF2196F3))
+                containerColor = Color(0xFF2196F3)
+            )
         ) {
             Icon(
                 painter = painterResource(R.drawable.ic_refresh),
@@ -146,6 +174,16 @@ fun CounterButtons(
             )
             Spacer(Modifier.width(ButtonDefaults.IconSpacing))
             Text("RESET")
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        Button(
+            onClick = onNext,
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF9C27B0)
+            )
+        ) {
+            Text("NEXT")
         }
     }
 }
@@ -158,7 +196,8 @@ fun CounterScreenPreview() {
             counter = 7,
             onIncrement = {},
             onDecrement = {},
-            onReset = {}
+            onReset = {},
+            onNext = {}
         )
     }
 }
