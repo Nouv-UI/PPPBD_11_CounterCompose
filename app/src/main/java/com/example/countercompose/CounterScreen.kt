@@ -122,3 +122,11 @@ fun CounterButtons(
         }
     }
 }
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun CounterScreenPreview() {
+    CounterComposeTheme {
+        CounterScreen()
+    }
+}
