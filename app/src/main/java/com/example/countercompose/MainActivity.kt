@@ -7,7 +7,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.countercompose.ui.theme.CounterComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,11 +21,24 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize()
                 ) { innerPadding ->
-                    CounterScreen(
+                    CounterApp(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
             }
+        }
+    }
+
+    @Preview(showBackground = true, showSystemUi = true)
+    @Composable
+    fun CounterScreenPreview() {
+        CounterComposeTheme {
+            CounterScreen(
+                counter = 7,
+                onIncrement = {},
+                onDecrement = {},
+                onReset = {}
+            )
         }
     }
 }
