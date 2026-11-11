@@ -5,7 +5,9 @@
 ## Gambar: 
 | CODELAB 1 - 3 | QUIZ |
 | :---: | :---: |
-| ![screen 1](<img width="1080" height="2400" alt="image" src="https://github.com/user-attachments/assets/ead035eb-97b3-4391-af94-20edb90a9b25" />) | ![screen 2](<img width="1080" height="2400" alt="image" src="https://github.com/user-attachments/assets/dded95c4-9781-4104-b83b-a73ffab390d7" />) | 
+| ![screen 1](<img width="1080" height="2400" alt="image" src="https://github.com/user-attachments/assets/57163954-262b-4d6d-80c7-07b2c0838764" />
+) | ![screen 2](<img width="1080" height="2400" alt="image" src="https://github.com/user-attachments/assets/c43f747d-1659-4e05-bf61-2276f84f1da2" />
+) | 
 
 ## Materi: 
 01. Introduction
