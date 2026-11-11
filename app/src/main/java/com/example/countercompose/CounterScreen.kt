@@ -16,10 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.countercompose.ui.theme.CounterComposeTheme
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 
 @Composable
 fun CounterApp(
@@ -44,11 +40,8 @@ fun CounterScreen(
     onIncrement: () -> Unit,
     onDecrement: () -> Unit,
     onReset: () -> Unit,
-    modifier: Modifier = Modifier) {
-
-    var counter by rememberSaveable { mutableIntStateOf(0) }
-//  remember { } menjaga agar state tidak dibuat ulang menjadi 0 setiap kali terjadi recomposition.
-//    ganti remember dengan rememberSaveable agar tidakke reset saat layar di rotasi
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = modifier
             .fillMaxSize()

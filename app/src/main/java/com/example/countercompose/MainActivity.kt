@@ -29,16 +29,16 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    @Preview(showBackground = true, showSystemUi = true)
-    @Composable
-    fun CounterScreenPreview() {
-        CounterComposeTheme {
-            CounterScreen(
-                counter = 7,
-                onIncrement = {},
-                onDecrement = {},
-                onReset = {}
-            )
-        }
-    }
+//    @Preview(showBackground = true, showSystemUi = true)
+//    @Composable
+//    fun CounterScreenPreview() {
+//        CounterComposeTheme {
+//            CounterScreen(
+//                counter = 7,
+//                onIncrement = {},
+//                onDecrement = {},
+//                onReset = {}
+//            )
+//        }
+//    }
 }
